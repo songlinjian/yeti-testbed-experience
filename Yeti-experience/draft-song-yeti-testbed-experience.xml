@@ -97,7 +97,7 @@
 <?rfc comments="no" ?>
 <?rfc inline="yes" ?>
 
-<rfc category="exp" docName="draft-song-yeti-testbed-experience-08"
+<rfc category="info" docName="draft-song-yeti-testbed-experience-10"
     ipr="trust200902">
 
   <front>
@@ -107,10 +107,10 @@
       <organization>Beijing Internet Institute</organization>
       <address>
         <postal>
-          <street>2508 Room, 25th Floor, Tower A, Time Fortune</street>
+          <street>2nd Floor, Building 5, No.58 Jing Hai Wu Lu, BDA</street>
           <city>Beijing</city>
           <region></region>
-          <code>100028</code>
+          <code>100176</code>
           <country>P. R. China</country>
         </postal>
         <email>songlinjian@gmail.com</email>
@@ -122,10 +122,10 @@
       <organization>Beijing Internet Institute</organization>
       <address>
         <postal>
-          <street>2508 Room, 25th Floor, Tower A, Time Fortune</street>
+          <street>2nd Floor, Building 5, No.58 Jing Hai Wu Lu, BDA</street>
           <city>Beijing</city>
           <region></region>
-          <code>100028</code>
+          <code>100176</code>
           <country>P. R. China</country>
         </postal>
         <email>dliu@biigroup.com</email>
@@ -149,7 +149,7 @@
       </address>
     </author>
 
-    <author fullname="Akira Kato" initials="" surname="Kato" >
+    <author fullname="Akira Kato" initials="Akira" surname="Kato" >
       <organization>Keio University/WIDE Project</organization>
       <address>
         <postal>
@@ -192,7 +192,12 @@
    provides an environment where technical and operational experiments
    can safely be performed without risk to production root server
    infrastructure.  Yeti DNS is an independently-coordinated project and
-   is not affiliated with ICANN, IANA or any Root Server Operator.</t>
+   is not affiliated with the IETF, ICANN, IANA, or any Root Server
+   Operator.  The objectives of the Yeti Project were set by the
+   participants in the project based on experiments that they considered
+   would provide valuable information, and with the aim of developing a
+   non-production testbed that would be open for use by anyone from the
+   technical community to propose or run experiments.</t>
 
    <t>The Yeti DNS testbed implementation includes various novel and
    experimental components.  These differences from the Root Server
@@ -244,17 +249,21 @@
         server system's infrastructure and to wonder what the
         operational implications of such changes might be.</t>
 
-      <t>The Yeti DNS Project was conceived in May 2015 to provide
-        a non-production testbed upon which the technical
-        community could propose and run experiments designed to
-        answer these kinds of questions. Coordination for the project
-        was provided by TISF, the WIDE Project and the
-        Beijing Internet Institute. Many volunteers collaborated
-        to build a distributed testbed that at the time of writing
-        includes 25 Yeti root servers with 16 operators and
-        handles experimental traffic from individual volunteers,
-        universities, DNS vendors and distributed measurement
-        networks.</t>
+      <t>The Yeti DNS Project was conceived in May 2015 with the aim of
+   providing a non-production testbed that would be open for use by
+   anyone from the technical community to propose or run experiments
+   designed to answer these kinds of questions. Coordination for the 
+   project was provided by BII, TISF and the WIDE Project. Thus, Yeti DNS 
+   is an independently-coordinated project and is not affiliated with the 
+   IETF, ICANN, IANA, or any Root Server Operator. The objectives of the 
+   Yeti Project were set by the participants in the project based on 
+   experiments that they considered would provide valuable information.</t>
+
+  <t>
+   Many volunteers collaborated to build a distributed testbed that at
+   the time of writing includes 25 Yeti root servers with 16 operators
+   and handles experimental traffic from individual volunteers,
+   universities, DNS vendors, and distributed measurement networks.</t>
 
       <t>By design, the Yeti testbed system serves the root zone
         published by the IANA with only those structural modifications
@@ -281,6 +290,11 @@
         effective measurement and analysis, something that is
         difficult or simply impractical in the production Root
         Server System.</t>
+
+        <t>This document describes the motivation for the Yeti project, 
+          describes the Yeti testbed infrastructure, and provides the 
+          technical and operational experiences of some users of the 
+          Yeti testbed.</t>
     </section>
 
     <section title="Requirements Notation and Conventions">
@@ -292,9 +306,16 @@
     </section>
 
     <section title="Areas of Study" anchor="areas_of_study">
-     <t>Examples of topics that the Yeti DNS Testbed was built to
-       address are included below, each illustrated with indicative
-       questions.</t>
+     <t>This section provides some examples of the topics that the developers
+   of the Yeti DNS Testbed considered important to address.  As noted in
+   Section 1, the Yeti DNS is an independently-coordinated project and
+   is not affiliated with the IETF, ICANN, IANA, or any Root Server
+   Operator.  Thus, the topics and areas for study were selected by (and
+   for) the proponents of the Yeti project to address their own concerns
+   and in the hope that the information and tools provided would be of
+   wider interest.</t>
+
+   <t>Each example included below is illustrated with indicative questions.</t>
 
      <section title="Implementation of a Root Server System-like Testbed">
        <t>
@@ -888,10 +909,10 @@ TISF: A collaborative engineering and security project by Paul Vixie
               on Linux (Ubuntu, Debian, CentOS, Red Hat and ArchLinux); 4
               run on FreeBSD, 1 on NetBSD and 1 in Windows server 2016.</t>
 
-            <t>DNS software: 18 of 25 Yeti-Root servers use BIND9
+            <t>DNS software: 16 of 25 Yeti-Root servers use BIND9
               (versions varying between 9.9.7 and 9.10.3); 4 use
               NSD (4.10 and 4.15); 2 use Knot (2.0.1 and 2.1.0), 1
-              uses Bundy (1.2.0) and 1 uses MS DNS (10.0.14300.1000).</t>
+              uses Bundy (1.2.0), 1 uses PowerDNS (4.1.3) and 1 uses MS DNS (10.0.14300.1000).</t>
           </list>
         </t>
       </section>
@@ -1524,10 +1545,20 @@ TISF: A collaborative engineering and security project by Paul Vixie
             transfer clients. Other approaches for key distribution
             and authentication could be considered.</t>
 
+     <t>
+      DNS is a tree-based hierarchical database. Mathematically it has a 
+      root node and dependency between parent and child nodes. So any 
+      failures and instability of parent nodes (Root in Yeti's case) 
+      will impacts their child nodes in case of human mistake, malicious 
+      attack or even earthquake. It is proposed to define technology 
+      and practices to allow any organization, from the smallest company 
+      to nations to be self-sufficient in their DNS.
+     </t>
      <t>In section 3.12 of <xref target="RFC8324"/>, a "Centrally Controlled Root" 
         is viewed as a issue of DNS. It is interesting in future study to try and 
-        test some technical tools like <eref target="https://en.wikipedia.org/wiki/Blockchain">blockchain </eref> to to remove the technical 
-        requirement for a central authority over the root.</t>
+        test some technical tools like <eref target="https://en.wikipedia.org/wiki/Blockchain">blockchain </eref> to either remove the technical 
+        requirement for a central authority over the root or enhance the 
+        security and stability of existing Root.</t>
         </list>
       </t>
 
@@ -1560,30 +1591,41 @@ TISF: A collaborative engineering and security project by Paul Vixie
     </section>
 
     <section title="Acknowledgments">
-      <t>The editors would like to acknowledge the contributions of
-        the various and many subscribers to the Yeti DNS Project
-        mailing lists, including the following people who were
-        involved in the implementation and operation of the Yeti
-        DNS testbed itself:</t>
+      <t>Firstly the authors would like to acknowledge the 
+        contributions from the people who were involved in 
+        the implementation and operation of the Yeti
+        DNS by donating their time and resource. They are: </t>
+        <t>
+        <list style="empty">
+        <t>Tomohiro Ishihara, Antonio Prado, 
+        Stephane Bortzmeyer, Mickael Jouanne, Pierre Beyssac, 
+        Joao Damas, Pavel Khramtsov, Dmitry Burkov, Dima Burkov, 
+        Kovalenko Dmitry, Otmar Lendl, Praveen Misra, Carsten Strotmann, 
+        Edwin Gomez, Daniel Stirnimann, Andreas Schulze  Remi Gacogne, 
+        Guillaume de Lafond, Yves Bovard, Hugo Salgado, Kees Monshouwer, 
+        Li Zhen, Daobiao Gong, Andreas Schulze, James Cloos, Runxia Wan
+      </t>
+        </list>
+        </t>
+
+      <t>Thanks are gave to all People who sent important advices and 
+        comments to Yeti, either in face-to-face meeting or virtually by 
+        via call and mailing list. Some of them are acknowledged in following: </t>
 
       <t>
         <list style="empty">
-          <t>Tomohiro Ishihara, Antonio Prado, Stephane Bortzmeyer,
-            Mickael Jouanne, Pierre Beyssac, Joao Damas, Pavel
-            Khramtsov, Ma Yan, Otmar Lendl, Praveen Misra, Carsten
-            Strotmann, Edwin Gomez, Remi Gacogne, Guillaume de Lafond,
-            Yves Bovard, Hugo Salgado, Li Zhen, Daobiao
-            Gong, Runxia Wan.</t>
+        <t>
+        Wu hequan, Zhou Hongren, Cheng Yunqing, Xia Chongfeng, Tang Xiongyan, Li Yuxiao, Feng Ming, Zhang Tongxu, Duan Xiaodong, Wang Yang, Wang JiYe, Wang Lei, Zhao Zhifeng, Chen Wei, Wang Wei, Wang Jilong, Du Yuejing, Tan XiaoSheng, Chen Shangyi, Huang Chenqing, Ma Yan, Li Xing, Cui Yong, Bi Jun, Duan Haixing, Marc Blanchet, Andrew Sullivan, Suzanne Wolf, Terry Manderson, Geoff Huston, Jaap Akkerhuis, Kaveh Ranjbar, Jun Murai, Paul Wilson, Kilnam Chonm
+      </t>
         </list>
       </t>
 
       <t>The editors also acknowledge the assistance of the Independent
         Submissions Editorial Board, and of the following reviewers
         whose opinions helped improve the clarity of this document:</t>
-
       <t>
         <list style="empty">
-          <t>Subramanian Moonesamy, Joe Abley,Paul Mockapetris</t>
+          <t>Joe Abley, Paul Mockapetris, Subramanian Moonesamy</t>
         </list>
       </t>
     </section>
@@ -2078,8 +2120,11 @@ yeti.mind-dns.nl.       86400 IN AAAA 2a02:990:100:b01::53:0
           <t>Add section for requirements Notation and Conventions, 
             editorial changes according to reviewers' comments.</t>
         </section>
-        <section title="draft-song-yeti-testbed-experience-07">
+        <section title="draft-song-yeti-testbed-experience-08">
           <t>Editorial changes after ISE review.</t>
+        </section>
+        <section title="draft-song-yeti-testbed-experience-09">
+          <t>ISE suggested editorial changes responding Terry's comments</t>
         </section>
       </section>
     </section>
